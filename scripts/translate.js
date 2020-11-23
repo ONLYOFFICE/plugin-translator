@@ -19,8 +19,8 @@
 			document.getElementById("iframe_parent").appendChild(ifr);
 			isInit = true;
 			ifr.onload = function() {
-				if (ifr.contentWindow.document.readyState == 'complete') //чтобы текс не появлялся первее селекта с языками
-					setTimeout(function() {ifr.contentDocument.getElementById("google_translate_element").innerHTML = text;}, 500);
+				if (ifr.contentWindow.document.readyState == 'complete')
+					ifr.contentDocument.getElementById("google_translate_element").innerHTML = text;
 			  }
 		} else {
 			ifr.contentDocument.getElementById("google_translate_element").innerHTML = text;

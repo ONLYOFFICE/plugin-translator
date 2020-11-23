@@ -3,7 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>translate</title>
-    <script type="text/javascript" src="https://onlyoffice.github.io/sdkjs-plugins/v1/plugins.js"></script>
+	<script type="text/javascript" src="https://onlyoffice.github.io/sdkjs-plugins/v1/plugins.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<style>
 		.body_class {
 			top: 0 !important;
@@ -42,12 +43,15 @@
 <body id="body" class="body_class" style="left:0px;top:0px;width:100%; height: 100%;margin:0px;padding:0px;">
 	<div id="google_translate_state"></div>
 	<div style="overflow: auto;">
-		<div id="google_translate_element" style="width: calc(100% - 15px);"></div>
+		<div id="google_translate_element2" style="width: calc(100% - 15px); word-break: break-word;"></div>
+		<div id="google_translate_element" style="opacity: 0; max-width: 0px; max-height: 0px; position: absolute;"></div>
 	</div>
 	<script>
+		var timeOut;
+		var count = 0;
 		function googleTranslateElementInit() 
 		{
-			document.getElementById("google_translate_element").style.height = document.getElementById("body").clientHeight- 60 +"px";
+			document.getElementById("google_translate_element2").style.height = document.getElementById("body").clientHeight- 60 +"px";
 			const urlParams = new URLSearchParams(window.location.search);
 			console.log(urlParams);
 			// document.getElementById("google_translate_element").innerHTML = decodeURIComponent(urlParams.get("text"));
@@ -57,6 +61,12 @@
 				disableAutoTranslation : false,
 			}, 'google_translate_state');
 		}
+		$('#google_translate_element').bind('DOMSubtreeModified', function(){
+			clearTimeout(timeOut);
+			timeOut = setTimeout(function() {
+				document.getElementById("google_translate_element2").innerHTML = document.getElementById("google_translate_element").innerHTML;
+			}, 500);
+		});
 	</script>
 <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> 
 </body>
